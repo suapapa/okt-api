@@ -3,7 +3,10 @@ from pydantic import BaseModel
 
 import openkoreantext as okt
 
-app = FastAPI()
+import os
+
+app = FastAPI(root_path=os.getenv("ROOT_PATH", "/okt"))
+# app = FastAPI()
 
 class TextRequest(BaseModel):
     text: str
