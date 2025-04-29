@@ -15,6 +15,7 @@ COPY ./app ./app
 ENV ROOT_PATH="/"
 ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-$(dpkg --print-architecture)"
 ENV PATH="$JAVA_HOME/bin:$PATH"
-ENV OKT_TOKEN="1234567890"
+
+COPY token /secret/token
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
