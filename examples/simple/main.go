@@ -18,11 +18,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(normalized)
+	fmt.Println(">>", normalized)
 
 	phrases, err := okt.ExtractPhrases("키스의 조건은 눈을 감아야 한다.")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(phrases)
+	fmt.Println(">>", phrases)
 }

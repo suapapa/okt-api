@@ -7,9 +7,10 @@ import openkoreantext as okt
 import os
 
 # Check for required environment variable
-okt_token = os.getenv("OKT_TOKEN")
+with open("/secret/token", "r") as token_file:
+    okt_token = token_file.read().strip()
 if not okt_token:
-    raise ValueError("OKT_TOKEN environment variable is required")
+    raise ValueError("Token file is empty or missing")
 
 class TokenMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):

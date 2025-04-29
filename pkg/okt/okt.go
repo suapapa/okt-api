@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 )
@@ -46,11 +45,11 @@ func (o *OKT) NormalizeText(text string) (string, error) {
 		return "", fmt.Errorf("status code: %d", resp.StatusCode)
 	}
 
-	io.Copy(os.Stdout, resp.Body)
-	body, _ := io.ReadAll(resp.Body)
-
 	var res normalizeResponse
-	json.Unmarshal(body, &res)
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return "", fmt.Errorf("failed to decode response: %w", err)
+	}
+
 	return res.Normalized, nil
 }
 
@@ -73,10 +72,11 @@ func (o *OKT) ExtractPhrases(text string) ([]string, error) {
 		return nil, fmt.Errorf("status code: %d", resp.StatusCode)
 	}
 
-	body, _ := io.ReadAll(resp.Body)
-
 	var res phrasesResponse
-	json.Unmarshal(body, &res)
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, fmt.Errorf("failed to decode response: %w", err)
+	}
+
 	return res.Phrases, nil
 }
 
