@@ -1,4 +1,4 @@
-module github.com/suapapa/okt-go
+module github.com/suapapa/okt-api
 
 go 1.24.2
 

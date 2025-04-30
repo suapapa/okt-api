@@ -2,6 +2,7 @@ package okt
 
 import (
 	"bytes"
+	"cmp"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -13,11 +14,11 @@ type OKT struct {
 	token   string
 }
 
-func NewOKT(baseURL string) (*OKT, error) {
+func New(baseURL, token string) (*OKT, error) {
 	if baseURL == "" {
 		baseURL = "http://localhost:8000"
 	}
-	token := os.Getenv("OKT_TOKEN")
+	token = cmp.Or(token, os.Getenv("OKT_TOKEN"))
 	if token == "" {
 		return nil, fmt.Errorf("OKT_TOKEN environment variable is not set")
 	}

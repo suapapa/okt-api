@@ -8,12 +8,17 @@ import (
 	"strings"
 
 	"github.com/goccy/go-yaml"
-	"github.com/suapapa/okt-go/pkg/okt"
+	"github.com/suapapa/okt-api/pkg/okt"
+)
+
+const (
+	// oktBaseURL = "http://127.0.0.1:8080"
+	oktBaseURL = "https://homin.dev/okt"
+	oktToken   = ""
 )
 
 func main() {
-	okt, err := okt.NewOKT("https://homin.dev/okt")
-	// okt, err := okt.NewOKT("http://127.0.0.1:8080")
+	okt, err := okt.New(oktBaseURL, oktToken)
 	if err != nil {
 		log.Fatal(err)
 	}
