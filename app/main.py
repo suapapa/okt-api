@@ -7,10 +7,13 @@ import openkoreantext as okt
 import os
 
 # Check for required environment variable
-with open("/secret/token", "r") as token_file:
-    okt_token = token_file.read().strip()
-if not okt_token:
-    raise ValueError("Token file is empty or missing")
+okt_token = None
+try:
+    with open("/secret/token", "r") as token_file:
+        okt_token = token_file.read().strip()
+except FileNotFoundError:
+    print("WARN: Token file not found")
+    pass
 
 class TokenMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -24,7 +27,8 @@ class TokenMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 app = FastAPI(root_path=os.getenv("ROOT_PATH", "/okt"))
-app.add_middleware(TokenMiddleware)
+if okt_token:
+    app.add_middleware(TokenMiddleware)
 
 # Create API router for v1
 v1_router = APIRouter(prefix="/v1")
