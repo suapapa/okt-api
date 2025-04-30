@@ -56,7 +56,7 @@ func parseHugoPage(fp string) (map[string]interface{}, string, error) {
 	// --- 으로 구분
 	parts := strings.SplitN(content, "---", 3)
 	if len(parts) < 3 {
-		return nil, "", fmt.Errorf("Front Matter를 찾을 수 없습니다.")
+		return nil, "", fmt.Errorf("could not find front matter")
 	}
 
 	yamlPart := parts[1]
@@ -66,7 +66,7 @@ func parseHugoPage(fp string) (map[string]interface{}, string, error) {
 	var frontMatter map[string]interface{}
 	err = yaml.Unmarshal([]byte(yamlPart), &frontMatter)
 	if err != nil {
-		return nil, "", fmt.Errorf("YAML 파싱 오류: %w", err)
+		return nil, "", fmt.Errorf("YAML parsing error: %w", err)
 	}
 
 	// 결과 출력

@@ -1,6 +1,3 @@
 #!/bin/bash
-set -e
-CR=icn.vultrcr.com/homincr1
-IMAGE_TAG=$CR/okt:latest 
-docker buildx build --platform linux/amd64 -t $IMAGE_TAG .
-docker push $IMAGE_TAG
+
+make push_image IMAGE_TAG=icn.vultrcr.com/homincr1/okt-api:latest BUILD_ARCHS=linux/amd64 BUILD_FLAGS= 
