@@ -13,7 +13,7 @@ import (
 
 const (
 	// oktBaseURL = "http://127.0.0.1:8080"
-	oktBaseURL = "https://homin.dev/okt"
+	oktBaseURL = "https://homin.dev/okt-api/v1"
 	oktToken   = ""
 )
 
