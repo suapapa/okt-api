@@ -1,5 +1,35 @@
+# Python
 __pycache__/
 *.py[cod]
+*$py.class
 .venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Go (pkg/ client)
+*.exe
+*.exe~
+*.test
+*.out
+/examples/**/simple
+
+# Env / secrets
 .env
+.env.*
+!.env.example
 token
+/secret/
+
+# Docker / local
+*.log
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
