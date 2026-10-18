@@ -10,30 +10,30 @@ import (
 )
 
 type OKT struct {
-	baseURL string
-	token   string
+	endpoint string
+	apiKey   string
 }
 
-func New(baseURL, token string) (*OKT, error) {
-	if baseURL == "" {
-		baseURL = "http://localhost:8000"
+func New(endpoint, apiKey string) (*OKT, error) {
+	if endpoint == "" {
+		endpoint = "http://localhost:8000"
 	}
-	token = cmp.Or(token, os.Getenv("OKT_TOKEN"))
-	if token == "" {
-		return nil, fmt.Errorf("OKT_TOKEN environment variable is not set")
+	apiKey = cmp.Or(apiKey, os.Getenv("OKT_APIKEY"))
+	if apiKey == "" {
+		return nil, fmt.Errorf("OKT_APIKEY environment variable is not set")
 	}
 
-	return &OKT{baseURL: baseURL, token: token}, nil
+	return &OKT{endpoint: endpoint, apiKey: apiKey}, nil
 }
 
 func (o *OKT) NormalizeText(text string) (string, error) {
 	payload, _ := json.Marshal(textRequest{Text: text})
-	req, err := http.NewRequest("POST", o.baseURL+"/normalize", bytes.NewBuffer(payload))
+	req, err := http.NewRequest("POST", o.endpoint+"/normalize", bytes.NewBuffer(payload))
 	if err != nil {
 		return "", err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+o.token)
+	req.Header.Set("Authorization", "Bearer "+o.apiKey)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -56,12 +56,12 @@ func (o *OKT) NormalizeText(text string) (string, error) {
 
 func (o *OKT) ExtractPhrases(text string) ([]string, error) {
 	payload, _ := json.Marshal(textRequest{Text: text})
-	req, err := http.NewRequest("POST", o.baseURL+"/phrases", bytes.NewBuffer(payload))
+	req, err := http.NewRequest("POST", o.endpoint+"/phrases", bytes.NewBuffer(payload))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+o.token)
+	req.Header.Set("Authorization", "Bearer "+o.apiKey)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

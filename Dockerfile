@@ -15,6 +15,6 @@ COPY ./app ./app
 ENV ROOT_PATH="/"
 ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-$(dpkg --print-architecture)"
 ENV PATH="$JAVA_HOME/bin:$PATH"
-# OKT_TOKEN is injected at runtime via environment / docker-compose
+# OKT_APIKEY is injected at runtime via environment / docker-compose
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

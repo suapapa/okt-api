@@ -8,6 +8,6 @@ services:
       - path: .env
         required: false
     environment:
-      OKT_TOKEN: ${OKT_TOKEN:?OKT_TOKEN is required}
+      OKT_APIKEY: ${OKT_APIKEY:?OKT_APIKEY is required}
       ROOT_PATH: ${ROOT_PATH:-/}
     restart: unless-stopped

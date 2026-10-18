@@ -12,13 +12,13 @@ import (
 )
 
 const (
-	// oktBaseURL = "http://127.0.0.1:8080"
-	oktBaseURL = "https://homin.dev/okt-api/v1"
-	oktToken   = ""
+	// oktEndpoint = "http://127.0.0.1:8080"
+	oktEndpoint = "https://homin.dev/okt-api/v1"
+	oktAPIKey   = ""
 )
 
 func main() {
-	okt, err := okt.New(oktBaseURL, oktToken)
+	okt, err := okt.New(oktEndpoint, oktAPIKey)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -6,24 +6,24 @@ from starlette.responses import JSONResponse
 import openkoreantext as okt
 import os
 
-# Token injected via environment variable
-okt_token = os.getenv("OKT_TOKEN")
-if not okt_token:
-    print("WARN: OKT_TOKEN environment variable is not set")
+# API key injected via environment variable
+okt_apikey = os.getenv("OKT_APIKEY")
+if not okt_apikey:
+    print("WARN: OKT_APIKEY environment variable is not set")
 
 class TokenMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        # Skip token validation for GET requests
+        # Skip API key validation for GET requests
         if request.method == "GET":
             return await call_next(request)
             
         token = request.headers.get("Authorization")
-        if not token or token != f"Bearer {okt_token}":
+        if not token or token != f"Bearer {okt_apikey}":
             return JSONResponse(status_code=401, content={"detail": "Invalid or missing token"})
         return await call_next(request)
 
 app = FastAPI(root_path=os.getenv("ROOT_PATH", "/okt"))
-if okt_token:
+if okt_apikey:
     app.add_middleware(TokenMiddleware)
 
 # Create API router for v1
