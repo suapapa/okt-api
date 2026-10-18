@@ -8,9 +8,14 @@ make build_image IMAGE_TAG=okt-api:test BUILD_ARCHS=linux/amd64 BUILD_FLAGS=
 ```
 > Change `BUILD_ARCHS` to `linux/arm64` for compatibility with Apple M series processors
 
-Run the API server:
+Run the API server (token via env):
 ```
-docker run -it --rm -p 8080:80 okt-api:test
+docker run -it --rm -p 8080:80 -e OKT_TOKEN=your-secret-token okt-api:test
+```
+
+Or with docker compose:
+```
+OKT_TOKEN=your-secret-token docker compose up --build
 ```
 
 Browse API documents:

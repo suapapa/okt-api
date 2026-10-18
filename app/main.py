@@ -6,14 +6,10 @@ from starlette.responses import JSONResponse
 import openkoreantext as okt
 import os
 
-# Check for required environment variable
-okt_token = None
-try:
-    with open("/secret/token", "r") as token_file:
-        okt_token = token_file.read().strip()
-except FileNotFoundError:
-    print("WARN: Token file not found")
-    pass
+# Token injected via environment variable
+okt_token = os.getenv("OKT_TOKEN")
+if not okt_token:
+    print("WARN: OKT_TOKEN environment variable is not set")
 
 class TokenMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):

@@ -1,0 +1,13 @@
+services:
+  okt-api:
+    build: .
+    image: okt-api:local
+    ports:
+      - "${OKT_PORT:-8080}:80"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OKT_TOKEN: ${OKT_TOKEN:?OKT_TOKEN is required}
+      ROOT_PATH: ${ROOT_PATH:-/}
+    restart: unless-stopped
